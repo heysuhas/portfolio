@@ -1,0 +1,157 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: #05060f;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+    color: white;
+    cursor: none !important;
+}
+
+.container {
+    position: relative;
+    height: 100vh; /* Fixed height to prevent resizing */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    cursor: none !important;
+}
+
+.canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: none !important;
+}
+
+.card {
+    cursor: none;
+    position: relative;
+    background: rgba(12, 13, 29, 0.7);
+    border: 1px solid #2a2b4a;
+    border-radius: 8px;
+    padding: 2rem;
+    max-width: 90%; /* Use percentage for responsiveness */
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+}
+
+.name {
+    font-size: 2.5rem;
+    background: linear-gradient(to right, #f72585, #7209b7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+    text-align: center; /* Center text for smaller screens */
+    width: 8ch; /* Set width to accommodate the longest text */
+    display: inline-block; /* Ensure the width is applied */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.title {
+    font-size: 1.5rem;
+    color: #a5b4fc;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.description {
+    color: #8d91c7;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.social-links {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    justify-content: center; /* Center links */
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.social-link {
+    background: #2a2b4a;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    color: #a5b4fc;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer !important;
+}
+
+.download-button {
+    background: linear-gradient(to right, #f72585, #7209b7);
+    border: none;
+    color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    cursor: pointer !important;
+    animation: gradientAnimation 3s infinite alternate;
+    align-self: center; /* Center the button horizontally */
+    margin-top: auto; /* Push the button to the bottom of the card */
+}
+
+.download-button:hover {
+    transform: scale(1.05);
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background: linear-gradient(to right, #f72585, #7209b7);
+    }
+    100% {
+        background: linear-gradient(to right, #7209b7, #f72585);
+    }
+}
+
+.custom-cursor {
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: opacity 0.3s ease;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .name {
+        font-size: 2rem;
+    }
+    .title {
+        font-size: 1.2rem;
+    }
+    .description {
+        font-size: 1rem;
+    }
+    .download-button {
+        padding: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .name {
+        font-size: 1.5rem;
+    }
+    .title {
+        font-size: 1rem;
+    }
+    .description {
+        font-size: 0.9rem;
+    }
+    .download-button {
+        padding: 0.6rem;
+    }
+}
