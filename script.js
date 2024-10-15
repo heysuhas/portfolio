@@ -45,7 +45,7 @@ window.addEventListener('resize', () => {
     canvas.height = window.innerHeight;
 });
 
-// Enhanced custom cursor
+
 const cursorDot = document.querySelector('.cursor-dot');
 const cursorOutline = document.querySelector('.cursor-outline');
 
@@ -86,15 +86,15 @@ function randomizeLetters(element, targetText, duration = 1500, onComplete) {
         if (elapsed < duration) {
             for (let i = 0; i < maxLength; i++) {
                 if (currentText[i] !== targetArray[i]) {
-                    currentText[i] = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // Random letter
+                    currentText[i] = String.fromCharCode(65 + Math.floor(Math.random() * 26)); 
                 }
             }
-            element.style.color = 'grey'; // Set color to grey during randomization
+            element.style.color = 'grey'; 
             element.innerHTML = currentText.join('');
-            setTimeout(() => requestAnimationFrame(randomize), 100); // Slow down the randomization
+            setTimeout(() => requestAnimationFrame(randomize), 100); 
         } else {
             element.innerHTML = targetText;
-            element.style.color = ''; // Reset color to default
+            element.style.color = ''; 
             onComplete();
         }
     }
@@ -102,11 +102,11 @@ function randomizeLetters(element, targetText, duration = 1500, onComplete) {
 }
 
 function startRandomizingAnimation(element, texts, delay = 100, index = 0) {
-    randomizeLetters(element, texts[index], 1500, () => { // 1.5 seconds duration
+    randomizeLetters(element, texts[index], 1500, () => { 
         setTimeout(() => {
-            index = (index + 1) % texts.length; // Move to the next text
+            index = (index + 1) % texts.length; 
             startRandomizingAnimation(element, texts, delay, index);
-        }, 1000); // Wait before starting the next animation
+        }, 1000); 
     });
 }
 
@@ -115,7 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
     startRandomizingAnimation(animatedNameElement, ['Suhas', 'ZeN']);
 });
 
-// Parallax effect for stars
 document.addEventListener('mousemove', (e) => {
     const mouseX = e.clientX / window.innerWidth - 0.5;
     const mouseY = e.clientY / window.innerHeight - 0.5;
