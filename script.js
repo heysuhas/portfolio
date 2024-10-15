@@ -45,33 +45,31 @@ window.addEventListener('resize', () => {
     canvas.height = window.innerHeight;
 });
 
-// Create custom cursor
-const customCursor = document.createElement('div');
-customCursor.classList.add('custom-cursor');
-document.body.appendChild(customCursor);
+// Enhanced custom cursor
+const cursorDot = document.querySelector('.cursor-dot');
+const cursorOutline = document.querySelector('.cursor-outline');
 
-// Update custom cursor position
-document.addEventListener('mousemove', (e) => {
-    customCursor.style.left = `${e.clientX}px`;
-    customCursor.style.top = `${e.clientY}px`;
-    customCursor.style.opacity = '1'; // Ensure cursor is visible when moving
+window.addEventListener('mousemove', (e) => {
+    const posX = e.clientX;
+    const posY = e.clientY;
+
+    cursorDot.style.left = `${posX}px`;
+    cursorDot.style.top = `${posY}px`;
+
+    cursorOutline.animate({
+        left: `${posX}px`,
+        top: `${posY}px`
+    }, { duration: 500, fill: "forwards" });
 });
 
-const starCanvas = document.getElementById('starCanvas');
-starCanvas.addEventListener('mouseenter', () => {
-    customCursor.style.opacity = '0';
-});
-starCanvas.addEventListener('mouseleave', () => {
-    customCursor.style.opacity = '1';
-});
-
+// Interactive elements
 const interactiveElements = document.querySelectorAll('.social-link, .download-button');
 interactiveElements.forEach(element => {
     element.addEventListener('mouseenter', () => {
-        customCursor.style.display = 'none'; // Hide custom cursor
+        cursorOutline.classList.add('cursor-hover');
     });
     element.addEventListener('mouseleave', () => {
-        customCursor.style.display = 'block'; // Show custom cursor
+        cursorOutline.classList.remove('cursor-hover');
     });
 });
 
@@ -115,4 +113,15 @@ function startRandomizingAnimation(element, texts, delay = 100, index = 0) {
 document.addEventListener('DOMContentLoaded', () => {
     const animatedNameElement = document.getElementById('animatedName');
     startRandomizingAnimation(animatedNameElement, ['Suhas', 'ZeN']);
+});
+
+// Parallax effect for stars
+document.addEventListener('mousemove', (e) => {
+    const mouseX = e.clientX / window.innerWidth - 0.5;
+    const mouseY = e.clientY / window.innerHeight - 0.5;
+
+    stars.forEach(star => {
+        star.x += mouseX * star.radius * 0.1;
+        star.y += mouseY * star.radius * 0.1;
+    });
 });
