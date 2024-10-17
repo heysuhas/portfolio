@@ -62,7 +62,6 @@ window.addEventListener('mousemove', (e) => {
     }, { duration: 500, fill: "forwards" });
 });
 
-// Interactive elements
 const interactiveElements = document.querySelectorAll('.social-link, .download-button');
 interactiveElements.forEach(element => {
     element.addEventListener('mouseenter', () => {
@@ -73,46 +72,44 @@ interactiveElements.forEach(element => {
     });
 });
 
-function randomizeLetters(element, targetText, duration = 1500, onComplete) {
-    const targetArray = targetText.split('');
-    const maxLength = targetArray.length;
-    let currentText = Array(maxLength).fill('');
-    let startTime = null;
+function typeWriter(element, texts, wait = 3000) {
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let currentText = '';
 
-    function randomize(timestamp) {
-        if (!startTime) startTime = timestamp;
-        const elapsed = timestamp - startTime;
-
-        if (elapsed < duration) {
-            for (let i = 0; i < maxLength; i++) {
-                if (currentText[i] !== targetArray[i]) {
-                    currentText[i] = String.fromCharCode(65 + Math.floor(Math.random() * 26)); 
-                }
-            }
-            element.style.color = 'grey'; 
-            element.innerHTML = currentText.join('');
-            setTimeout(() => requestAnimationFrame(randomize), 100); 
+    function type() {
+        const fullText = texts[textIndex];
+        
+        if (isDeleting) {
+            currentText = fullText.substring(0, charIndex - 1);
+            charIndex--;
         } else {
-            element.innerHTML = targetText;
-            element.style.color = ''; 
-            onComplete();
+            currentText = fullText.substring(0, charIndex + 1);
+            charIndex++;
         }
-    }
-    requestAnimationFrame(randomize);
-}
 
-function startRandomizingAnimation(element, texts, delay = 100, index = 0) {
-    randomizeLetters(element, texts[index], 1500, () => { 
-        setTimeout(() => {
-            index = (index + 1) % texts.length; 
-            startRandomizingAnimation(element, texts, delay, index);
-        }, 1000); 
-    });
+        element.innerHTML = `<span class="typed-text">${currentText}</span><span class="cursor">|</span>`;
+
+        let typeSpeed = isDeleting ? 50 : 100;
+
+        if (!isDeleting && charIndex === fullText.length) {
+            typeSpeed = wait;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            textIndex = (textIndex + 1) % texts.length;
+        }
+
+        setTimeout(type, typeSpeed);
+    }
+
+    type();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     const animatedNameElement = document.getElementById('animatedName');
-    startRandomizingAnimation(animatedNameElement, ['Suhas', 'ZeN']);
+    typeWriter(animatedNameElement, ['Suhas', 'ZeN']);
 });
 
 document.addEventListener('mousemove', (e) => {
